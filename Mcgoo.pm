@@ -79,8 +79,8 @@ sub FileExists
            : "  FAILURE ( $ExpectString )\n");
     $TestFailureHash{$TestIndex} = $ExpectString;
     $ReturnValue = 1;
-    $TestIndex ++;
   }
+  $TestIndex ++;
   
 }
 
