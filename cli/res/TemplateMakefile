@@ -1,0 +1,13 @@
+# Mcgoo test framework makefile.
+
+CC=clang
+CFLAGS=-g -Wall -Werror
+
+COMPILE=$(CC) $(CFLAGS) $@ -c $<
+
+RM=rm
+RM_STUFF=
+
+clean:
+	$(RM) $(RM_STUFF)
+

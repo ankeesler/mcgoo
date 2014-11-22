@@ -17,6 +17,9 @@
 #define MAKEFILE_CANNOT_OPEN 3
 #define MAKEFILE_CANNOT_CLOSE 4
 
+// Print constants. User can customize these.
+#define MAKEFILE_HEADER_LINE "# Mcgoo test framework makefile."
+
 // Create a makefile will the filename.
 // If the file is already created, it appends to it.
 int MakefileCreate(const char *filename);

@@ -7,7 +7,11 @@
 
 #include "Makefile.h"
 
+// Here is the makefile.
 static FILE *makefile = NULL;
+
+// Makefile stuff.
+#define MAKEFILE_TEMPLATE_FILE "res/TemplateMakefile"
 
 /*
   Private stuff.
@@ -19,11 +23,20 @@ static FILE *makefile = NULL;
  */
 int MakefileCreate(const char *filename)
 {
+  FILE *template = NULL;
+  char c;
+  
   if (makefile)
     return MAKEFILE_ALREADY_CREATED;
 
   if (!(makefile = fopen(filename, "w+")))
     return MAKEFILE_CANNOT_OPEN;
+  
+  if (!(template = fopen(MAKEFILE_TEMPLATE_FILE, "r")))
+    return MAKEFILE_CANNOT_OPEN;
+  
+  while ((c = fgetc(template)) != EOF)
+    fputc(c, makefile);
 
   return MAKEFILE_SUCCESS;
 }

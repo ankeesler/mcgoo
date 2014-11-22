@@ -24,5 +24,6 @@ my $output = `$EXEC init`;
 chomp $output;
 
 Mcgoo::FileExists "Mcgoo.mak";
+Mcgoo::FileLineExists "Mcgoo.mak", "# .* framework";
 
 Mcgoo::Summarize;
