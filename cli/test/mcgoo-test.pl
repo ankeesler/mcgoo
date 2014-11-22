@@ -23,6 +23,6 @@ Mcgoo::Expect $usage, qw/usage:.*/;
 my $output = `$EXEC`;
 chomp $output;
 
-Mcgoo::FileExists "Makefile";
+Mcgoo::FileExists "Mcgoo.mak";
 
 Mcgoo::Summarize;
