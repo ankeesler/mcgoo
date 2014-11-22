@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
         (*commandAction->action)();
     }
   }
+  
+  MakefileClose();
 
   return 0;
 }
