@@ -1,3 +1,4 @@
+# Makefile for mcgoo cli
 
 all: run
 
