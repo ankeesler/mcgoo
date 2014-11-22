@@ -16,4 +16,4 @@ run-simple-perl-test:
 	./simple-perl-test.pl
 
 clean:
-	rm -f test.o
+	rm -f test.o test
