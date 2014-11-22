@@ -6,9 +6,9 @@ use warnings;
 use lib '..';
 use Mcgoo;
 
-Mcgoo::Announce;
-
 Mcgoo::UseSimplePrintout;
+
+Mcgoo::Announce;
 
 # Basic checks.
 Mcgoo::Expect "andrew", "andrew";
