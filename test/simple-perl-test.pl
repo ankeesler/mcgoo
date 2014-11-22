@@ -30,5 +30,12 @@ Mcgoo::Expect "andrew", qw/\d+/;
 Mcgoo::Expect "andrew", "heyheyhey";
 Mcgoo::Expect "andrew", "an";
 
+# File exists
+Mcgoo::FileExists "perl-test.pl";
+Mcgoo::FileExists "../Mcgoo.pm";
+
+# File does not exist.
+Mcgoo::FileExists "Andrew.andrew";
+
 Mcgoo::Summarize;
 

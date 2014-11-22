@@ -23,4 +23,11 @@ Mcgoo::Expect "andrew5andrew", qw/.*\d[a-z]+/;
 # Wrong string.
 Mcgoo::Expect "andrew", "marshmallow";
 
+# File exists
+Mcgoo::FileExists "perl-test.pl";
+Mcgoo::FileExists "../Mcgoo.pm";
+
+# File does not exist.
+Mcgoo::FileExists "Andrew.andrew";
+
 Mcgoo::Summarize;

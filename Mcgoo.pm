@@ -62,6 +62,28 @@ sub Expect
     return $ReturnValue;
 }
 
+sub FileExists
+{
+  my $Filename = shift @_;
+  
+  my $ExpectString = "($Filename exists)";
+  
+  if (-f $Filename) {
+    print ($DoUseSimplePrintout
+           ? "."
+           : "  SUCCESS ( $ExpectString ) \n");
+    $ReturnValue = 0;
+  } else {
+    print ($DoUseSimplePrintout
+           ? "X"
+           : "  FAILURE ( $ExpectString )\n");
+    $TestFailureHash{$TestIndex} = $ExpectString;
+    $ReturnValue = 1;
+    $TestIndex ++;
+  }
+  
+}
+
 sub Summarize
 {
     my $TestTime = time - $TestStartTime;
