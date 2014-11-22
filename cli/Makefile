@@ -28,7 +28,7 @@ run: $(BUILD_DIR)/mcgoo
 	./$< $(ARGS)
 
 clean:
-	rm -rdf $(BUILD_DIR)
+	rm -rdf $(BUILD_DIR) Mcgoo.mak
 
 .PHONY: test
 test: 
