@@ -20,7 +20,7 @@ chomp $usage;
 
 Mcgoo::Expect $usage, qw/usage:.*/;
 
-my $output = `$EXEC`;
+my $output = `$EXEC init`;
 chomp $output;
 
 Mcgoo::FileExists "Mcgoo.mak";
