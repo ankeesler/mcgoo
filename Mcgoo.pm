@@ -67,6 +67,7 @@ sub FileExists
   my $Filename = shift @_;
   
   my $ExpectString = "($Filename exists)";
+  my $ReturnValue;
   
   if (-f $Filename) {
     print ($DoUseSimplePrintout
@@ -82,6 +83,39 @@ sub FileExists
   }
   $TestIndex ++;
   
+  return $ReturnValue;
+}
+
+sub FileLineExists
+{
+  my $Filename = shift @_;
+  my $FileLine = shift @_;
+  
+  my $ExpectString = "($Filename contains '$FileLine')";
+  my $ReturnValue = 1;
+  
+  open FILE, $Filename or return $ReturnValue;
+  
+  while (my $Line = <FILE>) {
+    if ($Line =~ $FileLine) {
+      $ReturnValue = 0;
+      last;
+    }
+  }
+  
+  if ($ReturnValue == 0) {
+    print ($DoUseSimplePrintout
+           ? "."
+           : "  SUCCESS ( $ExpectString ) \n");
+  } else {
+    print ($DoUseSimplePrintout
+           ? "X"
+           : "  FAILURE ( $ExpectString )\n");
+    $TestFailureHash{$TestIndex} = $ExpectString;
+  }
+  $TestIndex ++;
+  
+  return $ReturnValue;
 }
 
 sub Summarize
