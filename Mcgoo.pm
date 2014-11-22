@@ -40,37 +40,48 @@ sub Expect
 {
     my $String1 = shift @_;
     my $String2 = shift @_;
+    
+    my $ItMatches = ($String1 =~ /^$String2$/);
 
-    my $ExpectString = "{ $String1 =~ $String2 }";
-    my $CurrentTime = sprintf "%0.5f", time - $TestStartTime;
-    my $ReturnValue;
-
-    if ($String1 =~ /^$String2$/) {
-        print ($DoUseSimplePrintout
-               ? "."
-               : "  ( $CurrentTime s ) SUCCESS $ExpectString\n");
-        $ReturnValue = 0;
-    } else {
-        print ($DoUseSimplePrintout
-               ? "X"
-               : "  ( $CurrentTime s )  * FAILURE $ExpectString\n");
-        $TestFailureHash{$TestIndex} = $ExpectString;
-        $ReturnValue = 1;
-    }
-    $TestIndex ++;
-
-    return $ReturnValue;
+    return InternalExpect($ItMatches, "$String1 =~ $String2");
 }
 
 sub FileExists
 {
   my $Filename = shift @_;
   
-  my $ExpectString = "{ $Filename exists }";
+  return InternalExpect(-f $Filename, "$Filename exists");
+}
+
+sub FileLineExists
+{
+  my $Filename = shift @_;
+  my $FileLine = shift @_;
+
+  my $FoundIt = 0;
+  
+  open FILE, $Filename or return 1;
+  
+  while (my $Line = <FILE>) {
+    if ($Line =~ $FileLine) {
+      $FoundIt = 1;
+      last;
+    }
+  }
+  
+  return InternalExpect($FoundIt, "$Filename contains '$FileLine'");
+}
+
+sub InternalExpect
+{
+  my $Thing = shift @_;
+  my $ExpectString = shift @_;
+  
+  my $ExpectString = "{ $ExpectString }";
   my $CurrentTime = sprintf "%0.5f", time - $TestStartTime;
   my $ReturnValue;
   
-  if (-f $Filename) {
+  if ($Thing) {
     print ($DoUseSimplePrintout
            ? "."
            : "  ( $CurrentTime s ) SUCCESS $ExpectString\n");
@@ -78,42 +89,9 @@ sub FileExists
   } else {
     print ($DoUseSimplePrintout
            ? "X"
-           : "  ( $CurrentTime s )  * FAILURE ( $ExpectString )\n");
+           : "  ( $CurrentTime s )  * FAILURE $ExpectString\n");
     $TestFailureHash{$TestIndex} = $ExpectString;
     $ReturnValue = 1;
-  }
-  $TestIndex ++;
-  
-  return $ReturnValue;
-}
-
-sub FileLineExists
-{
-  my $Filename = shift @_;
-  my $FileLine = shift @_;
-  
-  my $ExpectString = "{ $Filename contains '$FileLine' }";
-  my $CurrentTime = sprintf "%0.5f", time - $TestStartTime;
-  my $ReturnValue = 1;
-  
-  open FILE, $Filename or return $ReturnValue;
-  
-  while (my $Line = <FILE>) {
-    if ($Line =~ $FileLine) {
-      $ReturnValue = 0;
-      last;
-    }
-  }
-  
-  if ($ReturnValue == 0) {
-    print ($DoUseSimplePrintout
-           ? "."
-           : "  ( $CurrentTime s ) SUCCESS $ExpectString\n");
-  } else {
-    print ($DoUseSimplePrintout
-           ? "X"
-           : "  ( $CurrentTime s )  * FAILURE ( $ExpectString )\n");
-    $TestFailureHash{$TestIndex} = $ExpectString;
   }
   $TestIndex ++;
   

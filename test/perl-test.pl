@@ -35,6 +35,6 @@ Mcgoo::FileLineExists "perl-test.pl", "# Basic checks.";
 Mcgoo::FileLineExists "perl-test.pl", qw/File \w+/;
 
 # File line does not exist.
-Mcgoo::FileLineExists "perl-test.pl", "# hey hey hey hey hey.";
+Mcgoo::FileLineExists "../Mcgoo.pm", "asljkndflakjnsdlfkjansldkfjn";
 
 Mcgoo::Summarize;
