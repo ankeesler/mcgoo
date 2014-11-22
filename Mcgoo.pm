@@ -41,19 +41,19 @@ sub Expect
     my $String1 = shift @_;
     my $String2 = shift @_;
 
-    my $ExpectString = "($String1 =~ $String2)";
-
+    my $ExpectString = "{ $String1 =~ $String2 }";
+    my $CurrentTime = sprintf "%0.5f", time - $TestStartTime;
     my $ReturnValue;
 
     if ($String1 =~ /^$String2$/) {
         print ($DoUseSimplePrintout
                ? "."
-               : "  SUCCESS ( $ExpectString ) \n");
+               : "  ( $CurrentTime s ) SUCCESS $ExpectString\n");
         $ReturnValue = 0;
     } else {
         print ($DoUseSimplePrintout
                ? "X"
-               : "  FAILURE ( $ExpectString )\n");
+               : "  ( $CurrentTime s )  * FAILURE $ExpectString\n");
         $TestFailureHash{$TestIndex} = $ExpectString;
         $ReturnValue = 1;
     }
@@ -66,18 +66,19 @@ sub FileExists
 {
   my $Filename = shift @_;
   
-  my $ExpectString = "($Filename exists)";
+  my $ExpectString = "{ $Filename exists }";
+  my $CurrentTime = sprintf "%0.5f", time - $TestStartTime;
   my $ReturnValue;
   
   if (-f $Filename) {
     print ($DoUseSimplePrintout
            ? "."
-           : "  SUCCESS ( $ExpectString ) \n");
+           : "  ( $CurrentTime s ) SUCCESS $ExpectString\n");
     $ReturnValue = 0;
   } else {
     print ($DoUseSimplePrintout
            ? "X"
-           : "  FAILURE ( $ExpectString )\n");
+           : "  ( $CurrentTime s )  * FAILURE ( $ExpectString )\n");
     $TestFailureHash{$TestIndex} = $ExpectString;
     $ReturnValue = 1;
   }
@@ -91,7 +92,8 @@ sub FileLineExists
   my $Filename = shift @_;
   my $FileLine = shift @_;
   
-  my $ExpectString = "($Filename contains '$FileLine')";
+  my $ExpectString = "{ $Filename contains '$FileLine' }";
+  my $CurrentTime = sprintf "%0.5f", time - $TestStartTime;
   my $ReturnValue = 1;
   
   open FILE, $Filename or return $ReturnValue;
@@ -106,11 +108,11 @@ sub FileLineExists
   if ($ReturnValue == 0) {
     print ($DoUseSimplePrintout
            ? "."
-           : "  SUCCESS ( $ExpectString ) \n");
+           : "  ( $CurrentTime s ) SUCCESS $ExpectString\n");
   } else {
     print ($DoUseSimplePrintout
            ? "X"
-           : "  FAILURE ( $ExpectString )\n");
+           : "  ( $CurrentTime s )  * FAILURE ( $ExpectString )\n");
     $TestFailureHash{$TestIndex} = $ExpectString;
   }
   $TestIndex ++;
