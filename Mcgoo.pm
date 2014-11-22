@@ -27,7 +27,7 @@ sub Announce
     $Filename =~ s%^\./%%;
 
     my $TestStartMessage = "(test = $Filename) [ ";
-    $TestStartMessage .= "\n" if $DoUseSimplePrintout;
+    $TestStartMessage .= "\n" if !$DoUseSimplePrintout;
 
     $ExpectNumber = 0;
     $TestStartTime = time;
@@ -70,7 +70,7 @@ sub Summarize
 
     print  " " if $DoUseSimplePrintout;
     printf "] ( %0.5f s ) ", $TestTime;
-    print  (length keys %TestFailureHash ? "FAIL" : "PASS");
+    print  (%TestFailureHash ? "FAIL" : "PASS");
     print  "\n";
 
     if ($DoUseSimplePrintout) {
