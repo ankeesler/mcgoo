@@ -1,14 +1,14 @@
 //
-// mcgoo.cpp
+// mcgoo.c
 // Andrew Keesler
 // November 21, 2014
 //
 // Main mcgoo file.
 
-#include <iostream>
-#include <cstring>
+#include <stdio.h>
+#include <string.h>
 
-using namespace std;
+#include "makefile.h"
 
 void initAction(void);
 
@@ -24,12 +24,14 @@ static CommandAction commandActions[] = {
 
 int main(int argc, char *argv[])
 {
+  int i;
+
   if (argc < 2) {
-    cout << "usage: mcgoo init" << endl;
+    printf("usage: mcgoo init\n");
     return 0;
   }
 
-  for (int i = 0; i < argc; i ++) {
+  for (i = 0; i < argc; i ++) {
     for (CommandAction *commandAction = commandActions;
          commandAction->command;
          commandAction ++) {
@@ -43,4 +45,7 @@ int main(int argc, char *argv[])
 
 void initAction(void)
 {
+  int error = MakefileCreate("Mcgoo.mak");
+  if (error)
+    printf("Error: cannot create makefile: %d\n", error);
 }

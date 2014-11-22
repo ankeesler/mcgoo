@@ -5,15 +5,15 @@
 use strict;
 use warnings;
 
-use lib '..';
+use lib '../..';
 use Mcgoo;
 
 Mcgoo::Announce;
 
 `make clean`;
-`make mcgoo`;
+`make compile`;
 
-my $usage = `./mcgoo`;
+my $usage = `./build/mcgoo`;
 chomp $usage;
 
 Mcgoo::Expect $usage, qw/usage:.*/;

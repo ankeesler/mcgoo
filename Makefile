@@ -25,7 +25,7 @@ $(LIBRARY_FILE): $(OBJ_FILES)
 
 lib: $(LIBRARY_FILE)
 
-include:
+include: unit-test.h
 	sudo cp unit-test.h /usr/include/
 
 dynamic: $(LIBRARY_FILE) include
@@ -35,23 +35,10 @@ clean:
 
 # MCGOO STUFF
 
-CXX=clang++
-CXXFLAGS=-g -Wall -Werror
-
-MCGOO_FILES=mcgoo.cpp
-MCGOO_OBJ=$(MCGOO_FILES:.c=.o)
 MCGOO_MOD=Mcgoo.pm
-MCGOO_LIB=/opt/local/lib/perl5/5.16.3/$(MCGOO_MOD)
-
-ARGS=
+MCGOO_LIB=/System/Library/Perl/Extras/5.18/$(MCGOO_MOD)
 
 hey: $(MCGOO_LIB)
 
 $(MCGOO_LIB): $(MCGOO_MOD)
 	sudo cp $< $@
-
-run: mcgoo
-	./mcgoo $(ARGS)
-
-mcgoo: $(MCGOO_OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ $^
