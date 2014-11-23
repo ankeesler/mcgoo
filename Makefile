@@ -29,6 +29,9 @@ STAGE_DIR=stage
 .PHONY: stage
 stage: cp-res
 	
+clean-stage:
+	rm -fdr $(STAGE_DIR)/*.mak
+	
 test-all: global cli-test perl-test lib-test
 	
 #######################################

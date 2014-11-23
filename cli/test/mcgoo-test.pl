@@ -20,4 +20,10 @@ chomp $output;
 Mcgoo::FileExists "Mcgoo.mak";
 Mcgoo::FileLineExists "Mcgoo.mak", "# .* framework";
 
+my $output = `mcgoo init hello.mak`;
+chomp $output;
+
+Mcgoo::FileExists "hello.mak";
+Mcgoo::FileLineExists "hello.mak", "# .* framework";
+
 Mcgoo::Summarize;
