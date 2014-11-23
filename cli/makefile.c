@@ -11,7 +11,7 @@
 static FILE *makefile = NULL;
 
 // Makefile stuff.
-#define MAKEFILE_TEMPLATE_FILE "res/TemplateMakefile"
+#define MAKEFILE_TEMPLATE_FILE "res/TemplateMakefile.mak"
 
 /*
   Private stuff.

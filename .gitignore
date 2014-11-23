@@ -2,8 +2,5 @@
 *.o
 /build/
 
-# The mcgoo CLI build directory
-/cli/build/
-
-# The test makefile
-Mcgoo.mak
+# The staging directory
+/stage/
