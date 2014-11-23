@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
 void initAction(void *data)
 {
-  int error = MakefileCreate((data ? data : "Mcgoo.mak"));
+  int error = MakefileCreate((data ? "Mcgoo.mak" : "Mcgoo.mak"));
   if (error)
     printf("Error: cannot create makefile: %d\n", error);
   MakefileClose();
