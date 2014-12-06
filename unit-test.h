@@ -26,19 +26,20 @@ void runTest(int (*test)(void), const char *name);
 void _announce(const char *);
 #define announce() _announce(__FILE__)
 
+void _expect(int, const char *, int);
 /** Standard expect.
 
     @param comparison, comparison that you want to be true.
 */
-void _expect(int, const char *);
-#define expect(comparison) _expect(comparison, #comparison)
+#define expect(comparison) _expect(comparison, #comparison, __LINE__)
 
+void _expectString(const char *, const char *, int);
 /** Standard expect of strings.
 
     @param s1, The first string.
     @param s2, The second string.
 */
-void expectString(const char *s1, const char *s2);
+#define expectString(s1, s2) _expectString(s1, s2, __LINE__)
 
 #endif /* __BGE_MAP_TEST_H__ */
 

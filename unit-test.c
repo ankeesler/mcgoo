@@ -38,21 +38,22 @@ void runTest(int (*test)(void), const char *name)
   fflush(stdout);
 }
 
-void _expect(int comparison, const char *comparisonString)
+void _expect(int comparison, const char *comparisonString, int line)
 {
   if (comparison) {
     expectNum ++;
     printf(".");
     fflush(stdout);
   } else {
-    printf("X <- %d ] FAIL { %s }\n", expectNum, comparisonString);
+    printf("X <- %d ] FAIL { %s } @ line %d\n",
+           expectNum, comparisonString, line);
     printf("\n");
     fflush(stdout);
     exit(-1);
   }
 }
 
-void expectString(const char *s1, const char *s2)
+void _expectString(const char *s1, const char *s2, int line)
 {
 #define EXPECT_STRING_THING_FORMAT "%s == %s"
   if ((strlen(s1) + 4 + strlen(s2)) <= 256) {
@@ -60,9 +61,9 @@ void expectString(const char *s1, const char *s2)
     sprintf(expectStringThing,
             EXPECT_STRING_THING_FORMAT,
             s1, s2);
-    _expect(!strcmp(s1, s2), expectStringThing);
+    _expect(!strcmp(s1, s2), expectStringThing, line);
   } else {
-    _expect(!strcmp(s1, s2), "s1 == s2");
+    _expect(!strcmp(s1, s2), "s1 == s2", line);
   }
 }
 
