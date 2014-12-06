@@ -20,10 +20,12 @@ chomp $output;
 Mcgoo::FileExists "Mcgoo.mak";
 Mcgoo::FileLineExists "Mcgoo.mak", "# .* framework";
 
-my $output = `mcgoo init hello.mak`;
+$output = `mcgoo add`;
 chomp $output;
+Mcgoo::Expect $output, "Error: cannot add test: [0-9]+";
 
-Mcgoo::FileExists "hello.mak";
-Mcgoo::FileLineExists "hello.mak", "# .* framework";
+$output = `mcgoo add hello-test`;
+chomp $output;
+Mcgoo::FileLineExists "Mcgoo.mak", "HELLO-TEST";
 
 Mcgoo::Summarize;

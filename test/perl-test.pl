@@ -37,4 +37,8 @@ Mcgoo::FileLineExists "perl-test.pl", qw/File \w+/;
 # File line does not exist.
 Mcgoo::FileLineExists "../Mcgoo.pm", "asljkndflakjnsdlfkjansldkfjn";
 
-Mcgoo::Summarize;
+my $Error = Mcgoo::Summarize;
+# Normally, we would want to make sure that this test
+# fails because there were failing expects. But, we wont
+# do that since it could kill the unit tests.
+Mcgoo::NExpect $Error, 0;

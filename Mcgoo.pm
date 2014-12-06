@@ -72,6 +72,16 @@ sub FileLineExists
   return InternalExpect($FoundIt, "$Filename contains '$FileLine'");
 }
 
+sub NExpect
+{
+    my $String1 = shift @_;
+    my $String2 = shift @_;
+    
+    my $ItMatches = ($String1 !~ /^$String2$/);
+
+    return InternalExpect($ItMatches, "$String1 !~ $String2");    
+}
+
 sub InternalExpect
 {
   my $Thing = shift @_;
@@ -103,10 +113,11 @@ sub Summarize
     my $TestTime = time - $TestStartTime;
     my $Row = 0;
     my $RowPrintedOn = 0;
+    my $WasFailure = (%TestFailureHash ? 1 : 0);
 
     print  " " if $DoUseSimplePrintout;
     printf "] ( %0.5f s ) ", $TestTime;
-    print  (%TestFailureHash ? "FAIL" : "PASS");
+    print  ($WasFailure ? "FAIL" : "PASS");
     print  "\n";
 
     if ($DoUseSimplePrintout) {
@@ -120,6 +131,8 @@ sub Summarize
             print "$TestFailureHash{$Key}\n";
         }
     }
+
+    return $WasFailure;
 }
 
 1;

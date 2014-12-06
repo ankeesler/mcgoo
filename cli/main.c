@@ -11,9 +11,11 @@
 #include "makefile.h"
 
 #define PRINT_USAGE() \
-  printf("usage: mcgoo init [makefile name]\n");
+  printf("usage: mcgoo init [makefile_name]\n"); \
+  printf("       mcgoo add test_name]\n");
 
 void initAction(void *);
+void addAction(void *);
 
 typedef struct {
   const char *command;
@@ -22,6 +24,7 @@ typedef struct {
 
 static CommandAction commandActions[] = {
   { "init", initAction },
+  { "add",  addAction },
   { NULL, NULL }
 };
 
@@ -48,8 +51,16 @@ int main(int argc, char *argv[])
 
 void initAction(void *data)
 {
-  int error = MakefileCreate((data ? "Mcgoo.mak" : "Mcgoo.mak"));
+  int error = MakefileCreate(MAKEFILE_DEFAULT_NAME);
   if (error)
     printf("Error: cannot create makefile: %d\n", error);
+  MakefileClose();
+}
+
+void addAction(void *data)
+{
+  int error = MakefileAddTest((const char *)data);
+  if (error)
+    printf("Error: cannot add test: %d\n", error);
   MakefileClose();
 }
