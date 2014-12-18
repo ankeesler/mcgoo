@@ -76,7 +76,8 @@ lib-test: $(LIBRARY_TEST_EXE) dynamic
 #######################################
 
 MCGOO_MOD=Mcgoo.pm
-MCGOO_LIB=/System/Library/Perl/Extras/5.18/$(MCGOO_MOD)
+PERL_VERSION=5.16
+MCGOO_LIB=/System/Library/Perl/Extras/$(PERL_VERSION)/$(MCGOO_MOD)
 
 MCGOO_PERL_TEST=test/perl-test.pl
 MCGOO_PERL_SIMPLE_TEST=test/simple-perl-test.pl
