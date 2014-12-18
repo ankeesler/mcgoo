@@ -4,3 +4,6 @@
 
 # The staging directory
 /stage/
+
+# Emacs files
+*~
