@@ -22,7 +22,7 @@ void runTest(int (*test)(void), const char *name);
 #define run(test) runTest(test, #test)
 
 /** Announce that a test from a file is running.
- */
+*/
 void _announce(const char *);
 #define announce() _announce(__FILE__)
 
@@ -40,6 +40,12 @@ void _expectString(const char *, const char *, int);
     @param s2, The second string.
 */
 #define expectString(s1, s2) _expectString(s1, s2, __LINE__)
+
+/** Print out an variable's int value during a test.
+
+    @param variable The variable you want to pring out.
+*/
+#define noteInt(variable) printf("(%s = %d)", #variable, (int)variable);
 
 #endif /* __BGE_MAP_TEST_H__ */
 

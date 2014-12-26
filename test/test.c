@@ -32,6 +32,23 @@ int longTest(void)
   return 0;
 }
 
+int noteTest(void)
+{
+  int hey;
+
+  expect(1); expect(1); expect(1);
+
+  hey = 5;
+  noteInt(hey);
+
+  expect(1); expect(1); expect(1);
+
+  hey = 10;
+  noteInt(hey);
+
+  return 0;
+}
+
 int failedTest(void)
 {
   int i;
@@ -47,6 +64,7 @@ int main(void)
   run(numbersTest);
   run(stringsTest);
   run(longTest);
+  run(noteTest);
   run(failedTest);
   return 0;
 }
