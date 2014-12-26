@@ -47,5 +47,11 @@ void _expectString(const char *, const char *, int);
 */
 #define noteInt(variable) printf("(%s = %d)", #variable, (int)variable);
 
+/** Print out a variable in hex value during a test.
+
+    @param variable The variable you want to pring out.
+*/
+#define noteHex(variable) printf("(%s = 0x%X)", #variable, (int)variable);
+
 #endif /* __BGE_MAP_TEST_H__ */
 

@@ -46,6 +46,11 @@ int noteTest(void)
   hey = 10;
   noteInt(hey);
 
+  expect(1); expect(1); expect(1);
+
+  hey = 129;
+  noteHex(hey);
+
   return 0;
 }
 
