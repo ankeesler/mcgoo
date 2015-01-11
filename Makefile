@@ -111,4 +111,4 @@ run-java-test: java-test
 	cd $(BUILD_DIR); java test.Test
 
 $(MCGOO_JAR): mcgoo-package
-	cd $(BUILD_DIR); jar cf $@ mcgoo/*.class
+	cd $(BUILD_DIR); sudo jar cf $@ mcgoo/*.class
