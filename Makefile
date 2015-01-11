@@ -32,13 +32,13 @@ stage: cp-res
 clean-stage:
 	rm -fdr $(STAGE_DIR)/*.mak
 	
-test-all: global cli-test perl-test lib-test
+test-all: global run-java-test cli-test perl-test lib-test
 	
 #######################################
 # Global install stuff
 #######################################
 
-global: dynamic module cli-global
+global: dynamic module cli-global java-lib
 
 #######################################
 # C unit test library stuff
@@ -136,3 +136,30 @@ cp-res:
 
 cli-test: cli-global stage
 	cd $(STAGE_DIR); ../$(MCGOO_CLI_TEST_SCRIPT); cd ..
+
+#######################################
+# Java stuff
+#######################################
+
+JAVA_STUFF_DIR=java
+
+JAVA_SRC_DIR=$(JAVA_STUFF_DIR)/mcgoo
+JAVA_TST_DIR=$(JAVA_STUFF_DIR)/test
+
+JAR_NAME=mcgoo.jar
+JAR_LOCATION=/usr/local/lib
+MCGOO_JAR=$(JAR_LOCATION)/$(JAR_NAME)
+
+java-lib: $(MCGOO_JAR)
+
+mcgoo-package: $(JAVA_SRC_DIR)/*.java | $(BUILD_DIR_CREATED)
+	javac $^ -d $(BUILD_DIR) 
+
+java-test: java-lib
+	javac -cp $(MCGOO_JAR) $(JAVA_TST_DIR)/*.java -d $(BUILD_DIR)
+
+run-java-test: java-test
+	cd $(BUILD_DIR); java test.Test
+
+$(MCGOO_JAR): mcgoo-package
+	cd $(BUILD_DIR); jar cf $@ mcgoo/*.class
