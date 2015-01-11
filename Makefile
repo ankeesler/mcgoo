@@ -72,12 +72,13 @@ lib-test: $(BUILD_DIR)/lib-test dynamic
 # Mcgoo Perl Module thing
 #######################################
 
-MCGOO_MOD=Mcgoo.pm
+MCGOO_MOD_NAME=Mcgoo.pm
+MCGOO_MOD=perl/$(MCGOO_MOD_NAME)
 PERL_VERSION=5.16
-MCGOO_LIB=/System/Library/Perl/Extras/$(PERL_VERSION)/$(MCGOO_MOD)
+MCGOO_LIB=/System/Library/Perl/Extras/$(PERL_VERSION)/$(MCGOO_MOD_NAME)
 
-MCGOO_PERL_TEST=test/perl-test.pl
-MCGOO_PERL_SIMPLE_TEST=test/simple-perl-test.pl
+MCGOO_PERL_TEST=perl/test/perl-test.pl
+MCGOO_PERL_SIMPLE_TEST=perl/test/simple-perl-test.pl
 
 $(MCGOO_LIB): $(MCGOO_MOD)
 	sudo cp $< $@
