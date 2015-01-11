@@ -25,20 +25,14 @@ clean:
 	$(RM) $(RM_STUFF)
 
 STAGE_DIR=stage
-
-.PHONY: stage
-stage: cp-res
 	
-clean-stage:
-	rm -fdr $(STAGE_DIR)/*.mak
-	
-test-all: global run-java-test cli-test perl-test lib-test
+test-all: global run-java-test perl-test lib-test
 	
 #######################################
 # Global install stuff
 #######################################
 
-global: dynamic module cli-global java-lib
+global: dynamic module java-lib
 
 #######################################
 # C unit test library stuff
@@ -91,50 +85,6 @@ perl-regular-test:
 perl-simple-test:
 	$(MCGOO_PERL_SIMPLE_TEST)
 perl-test: perl-regular-test perl-simple-test
-
-#######################################
-# Cli stuff
-#######################################
-
-MCGOO_CLI_EXE_NAME=mcgoo
-MCGOO_CLI_EXE_DIR=/usr/bin
-MCGOO_CLI_EXE=$(MCGOO_CLI_EXE_DIR)/$(MCGOO_CLI_EXE_NAME)
-
-MCGOO_CLI_SRC=main.c makefile.c
-MCGOO_CLI_OBJ=$(shell echo $(MCGOO_CLI_SRC) | sed -E -e 's/([a-z\-]+).c/$(BUILD_DIR)\/\1.o/g')
-
-ARGS=
-
-MCGOO_CLI_TEST_SCRIPT_DIR=cli/test/
-MCGOO_CLI_TEST_SCRIPT_NAME=mcgoo-test.pl
-MCGOO_CLI_TEST_SCRIPT=$(MCGOO_CLI_TEST_SCRIPT_DIR)/$(MCGOO_CLI_TEST_SCRIPT_NAME)
-
-RES_DIR=cli/res
-
-$(BUILD_DIR)/main.o: cli/main.c $(BUILD_DIR_CREATED)
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-$(BUILD_DIR)/makefile.o: cli/makefile.c $(BUILD_DIR_CREATED)
-	$(CC) $(CFLAGS) -o $@ -c $<
-
-$(BUILD_DIR)/$(MCGOO_CLI_EXE_NAME): $(MCGOO_CLI_OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
-
-cli: $(BUILD_DIR)/$(MCGOO_CLI_EXE_NAME)
-
-run-cli: cli
-	$(BUILD_DIR)/$(MCGOO_CLI_EXE_NAME) $(ARGS)
-
-$(MCGOO_CLI_EXE_DIR)/$(MCGOO_CLI_EXE_NAME): $(MCGOO_CLI_OBJ)
-	sudo $(CC) $(CFLAGS) -o $@ $^
-
-cli-global: $(MCGOO_CLI_EXE_DIR)/$(MCGOO_CLI_EXE_NAME)
-
-cp-res:
-		cp -R $(RES_DIR) $(STAGE_DIR)
-
-cli-test: cli-global stage
-	cd $(STAGE_DIR); ../$(MCGOO_CLI_TEST_SCRIPT); cd ..
 
 #######################################
 # Java stuff
