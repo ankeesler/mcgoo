@@ -60,6 +60,40 @@ public class Test extends McgooTest {
 
         }
       });
+      
+    add(new McgooCase() {
+      public String name() { return "exceptionTest"; }
+      public void run() {
+        expect(true); expect(true); expect(true);
+        
+        Integer i = null;
+        expect(i + 5 == 5);
+        
+        expect(true); expect(true); expect(true);
+      }  
+    });
+    
+    add(new McgooCase() {
+      public String name() { return "fillerTest"; }
+      public void run() {
+        expect(true); expect(true); expect(true);
+        expect(true); expect(true); expect(true);
+        expect(true); expect(true); expect(true);
+        expect(true); expect(true); expect(true);
+      }  
+    });
+    
+    add(new McgooCase() {
+      public String name() { return "otherExceptionTest"; }
+      public void run() {
+        expect(true); expect(true); expect(true);
+        
+        Integer i = null;
+        expect(i + 5 == 5);
+        
+        expect(true); expect(true); expect(true);
+      }  
+    });
 
     run();
   }

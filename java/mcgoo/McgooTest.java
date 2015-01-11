@@ -3,6 +3,7 @@ package mcgoo;
 import java.lang.Thread;
 
 import java.util.*;
+import java.io.*;
 
 /** This class contains test utilities for java.
  *
@@ -51,16 +52,38 @@ public class McgooTest {
       System.out.printf("(test = %s) [ ", testCase.name());
       
       expectNumber = 1;
-      nanoTime = System.nanoTime();
-      testCase.run();
-      nanoTime = System.nanoTime() - nanoTime; // rollover shmollover
-      
-      System.out.printf(" ] ( %.3f us ) %s\n",
-                        nanoTime / 1000.0,
-                        (((failPolicy == FailPolicy.FINISH_CASE)
-                          && (failures > 0))
-                         ? "FAIL"
-                         : "PASS"));
+      try {
+        nanoTime = System.nanoTime();
+        testCase.run();
+        nanoTime = System.nanoTime() - nanoTime; // rollover shmollover
+        System.out.printf(" ] ( %.3f us ) %s\n",
+                          nanoTime / 1000.0,
+                          (((failPolicy == FailPolicy.FINISH_CASE)
+                            && (failures > 0))
+                           ? "FAIL"
+                           : "PASS"));
+      } catch (Exception e) {
+        System.out.printf(" EXCEPTION <- %d ] FAIL { %s }\n",
+                          expectNumber,
+                          e);
+        //                                         (test =
+        StringBuilder builder = new StringBuilder("       ");
+        //                  testCaseName             + ') [ '  
+        for (int i = 0; i < testCase.name().length() + 4; i ++)
+          builder.append(' ');
+        //                  expectNumber + (SPACE)
+        for (int i = 0; i < expectNumber + 1; i ++)
+          builder.append(' ');
+        
+        StringWriter trace = new StringWriter();
+        e.printStackTrace(new PrintWriter(trace));
+        String[] traceLines = trace.toString().split("\n");
+        // Skip the exception name since we already printed that above.
+        for (int i = 1; i < traceLines.length; i ++)
+          System.out.printf("%s%s\n",
+                            builder.toString(),
+                            traceLines[i].replaceAll("[\n\t]", ""));
+      }
     }
 
     // Summarize.
