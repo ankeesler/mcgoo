@@ -48,14 +48,10 @@ LIBRARY_NAME=libmcgoo
 LIBRARY_LOCATION=/usr/lib
 LIBRARY_FILE=$(LIBRARY_LOCATION)/$(LIBRARY_NAME).so
 
-LIBRARY_TEST_FILE=test.c
-LIBRARY_TEST_OBJ=$(shell echo $(LIBRARY_TEST_FILE) | sed -E -e 's/([a-z\-]+).c/$(BUILD_DIR)\/\1.o/g')
-LIBRARY_TEST_EXE=$(BUILD_DIR)/test
+$(BUILD_DIR)/%.o: c/test/%.c $(BUILD_DIR_CREATED)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
-$(LIBRARY_TEST_EXE): test/test.c $(BUILD_DIR_CREATED)
-	$(CC) $(CFLAGS) -lmcgoo -o $@ $<
-
-$(BUILD_DIR)/unit-test.o: unit-test.c $(BUILD_DIR_CREATED)
+$(BUILD_DIR)/%.o: c/%.c c/%.h $(BUILD_DIR_CREATED)
 	$(CC) $(CFLAGS) -fpic -o $@ -c $<
 
 $(LIBRARY_FILE): $(OBJ_FILES)
@@ -63,12 +59,15 @@ $(LIBRARY_FILE): $(OBJ_FILES)
 
 lib: $(LIBRARY_FILE)
 
-include: unit-test.h
-	sudo cp unit-test.h /usr/include/
+include: c/unit-test.h
+	sudo cp c/unit-test.h /usr/include/
 
 dynamic: $(LIBRARY_FILE) include
 
-lib-test: $(LIBRARY_TEST_EXE) dynamic
+$(BUILD_DIR)/test: $(BUILD_DIR)/unit-test.o $(BUILD_DIR)/test.o
+	$(CC) $(CFLAGS) -lmcgoo -o $@ $^
+
+lib-test: $(BUILD_DIR)/test dynamic
 	$<
 
 #######################################
