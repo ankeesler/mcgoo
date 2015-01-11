@@ -45,11 +45,13 @@ void _expect(int comparison, const char *comparisonString, int line)
     printf(".");
     fflush(stdout);
   } else {
-    printf("X <- %d ] FAIL { %s } @ line %d\n",
+    printf("X <- %d ] FAIL { %s } @ line %d",
            expectNum, comparisonString, line);
-    printf("\n");
+#ifndef UNIT_TEST_UNIT_TEST
+    printf("\n\n");
     fflush(stdout);
     exit(-1);
+#endif
   }
 }
 

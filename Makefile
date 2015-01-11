@@ -13,7 +13,6 @@ CFLAGS=-Wall -Werror -g
 
 BUILD_DIR=build
 BUILD_DIR_CREATED=$(BUILD_DIR)/created
-OBJ_FILES=$(BUILD_DIR)/unit-test.o
 
 RM=rm -rdf
 RM_STUFF=$(BUILD_DIR) *.dSYM
@@ -42,26 +41,31 @@ LIBRARY_NAME=libmcgoo
 LIBRARY_LOCATION=/usr/lib
 LIBRARY_FILE=$(LIBRARY_LOCATION)/$(LIBRARY_NAME).so
 
+UNIT_TEST_HEADER=c/unit-test.h
+
 $(BUILD_DIR)/%.o: c/test/%.c $(BUILD_DIR_CREATED)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(BUILD_DIR)/%.o: c/%.c c/%.h $(BUILD_DIR_CREATED)
 	$(CC) $(CFLAGS) -fpic -o $@ -c $<
+	
+$(BUILD_DIR)/unit-test-unit-test.o: c/unit-test.c $(UNIT_TEST_HEADER) $(BUILD_DIR_CREATED)
+	$(CC) $(CFLAGS) -fpic -DUNIT_TEST_UNIT_TEST -o $@ -c $<
 
-$(LIBRARY_FILE): $(OBJ_FILES)
-	sudo $(CC) $(CFLAGS) -fpic -shared -o $@ $(OBJ_FILES)
+$(LIBRARY_FILE): $(BUILD_DIR)/unit-test.o | $(UNIT_TEST_HEADER)
+	sudo $(CC) $(CFLAGS) -fpic -shared -o $@ $^
 
 lib: $(LIBRARY_FILE)
 
-include: c/unit-test.h
-	sudo cp c/unit-test.h /usr/include/
+include: $(UNIT_TEST_HEADER)
+	sudo cp $^ /usr/include/
 
 dynamic: $(LIBRARY_FILE) include
 
-$(BUILD_DIR)/test: $(BUILD_DIR)/unit-test.o $(BUILD_DIR)/test.o
-	$(CC) $(CFLAGS) -lmcgoo -o $@ $^
+$(BUILD_DIR)/lib-test: $(BUILD_DIR)/unit-test-unit-test.o $(BUILD_DIR)/test.o
+	$(CC) $(CFLAGS) -o $@ $^
 
-lib-test: $(BUILD_DIR)/test dynamic
+lib-test: $(BUILD_DIR)/lib-test dynamic
 	$<
 
 #######################################
