@@ -50,7 +50,10 @@ public class Test extends McgooTest {
           expect(true);
           expect(true);
           expect(true);
+          
+          // Fail.
           expect(false);
+          
           expect(true);
           expect(true);
           expect(true);

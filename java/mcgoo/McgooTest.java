@@ -49,9 +49,12 @@ public class McgooTest {
     // Run.
     for (McgooCase testCase : testCases) {
       System.out.printf("(test = %s) [ ", testCase.name());
+      
+      expectNumber = 1;
       nanoTime = System.nanoTime();
       testCase.run();
       nanoTime = System.nanoTime() - nanoTime; // rollover shmollover
+      
       System.out.printf(" ] ( %.3f us ) %s\n",
                         nanoTime / 1000.0,
                         (((failPolicy == FailPolicy.FINISH_CASE)
@@ -74,7 +77,7 @@ public class McgooTest {
   }
   
   private void _expect(boolean thing, String failString) {
-    int expectLine = Thread.currentThread().getStackTrace()[2].getLineNumber();
+    int expectLine = Thread.currentThread().getStackTrace()[3].getLineNumber();
     
     if (thing) {
       System.out.print(".");
