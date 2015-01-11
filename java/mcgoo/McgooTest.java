@@ -67,6 +67,12 @@ public class McgooTest {
                        failures);
   }
   
+  /** Make a note in the test.
+   */
+  public void note(String variable, Object value) {
+    System.out.printf("(%s=%s)", variable, value);
+  }
+  
   private void _expect(boolean thing, String failString) {
     int expectLine = Thread.currentThread().getStackTrace()[2].getLineNumber();
     

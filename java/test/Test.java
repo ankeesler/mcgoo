@@ -34,6 +34,8 @@ public class Test extends McgooTest {
           
           List<Integer> list3 = new ArrayList<Integer>();
           nexpect(list1, list3);
+          
+          note("list1", list1);
 
           // Fail.
           expect(list1, list3);
