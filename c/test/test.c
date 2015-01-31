@@ -51,6 +51,11 @@ int noteTest(void)
   hey = 129;
   noteHex(hey);
 
+  expect(1); expect(1); expect(1);
+
+  double ok = 1.123123123;
+  noteFloat(ok);
+
   return 0;
 }
 
