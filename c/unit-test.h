@@ -49,6 +49,12 @@ void _expectString(const char *, const char *, int);
 */
 #define expectString(s1, s2) _expectString(s1, s2, __LINE__)
 
+/** Print out a string during a test.
+
+    @param string The string to print out.
+*/
+#define note(string) printf("(%s)", string);
+
 /** Print out an variable's int value during a test.
 
     @param variable The variable you want to pring out.

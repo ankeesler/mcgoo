@@ -56,6 +56,10 @@ int noteTest(void)
   double ok = 1.123123123;
   noteFloat(ok);
 
+  expect(1); expect(1); expect(1);
+
+  note("andrew");
+
   return 0;
 }
 
