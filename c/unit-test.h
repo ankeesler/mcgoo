@@ -53,25 +53,42 @@ void _expectString(const char *, const char *, int);
 
     @param string The string to print out.
 */
-#define note(string) printf("(%s)", string);
+#define note(string)                                  \ 
+  do {                                                \
+    printf("(%s)", string);                           \
+    fflush(stdout);                                   \
+  } while(0);
 
 /** Print out an variable's int value during a test.
 
     @param variable The variable you want to pring out.
 */
-#define noteInt(variable) printf("(%s = %ld)", #variable, (long)variable);
+#define noteInt(variable)                             \
+  do {                                                \
+    printf("(%s = %d)", #variable, (long)variable);   \
+    fflush(stdout);                                   \
+  } while(0);
+
 
 /** Print out a variable in hex value during a test.
 
     @param variable The variable you want to pring out.
 */
-#define noteHex(variable) printf("(%s = 0x%X)", #variable, (int)variable);
+#define noteHex(variable)                             \
+  do {                                                \
+    printf("(%s = 0x%X)", #variable, (long)variable); \
+    fflush(stdout);                                   \
+  } while(0);
 
 /** Print out a variable as a float during a test.
 
     @param variable The variable you want to pring out.
 */
-#define noteFloat(variable) printf("(%s = %f)", #variable, (double)variable);
+#define noteFloat(variable)                           \
+  do {                                                \
+    printf("(%s = %f)", #variable, (long)variable);   \
+    fflush(stdout);                                   \
+  } while(0);
 
 #endif /* __BGE_MAP_TEST_H__ */
 
