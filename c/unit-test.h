@@ -65,7 +65,7 @@ void _expectString(const char *, const char *, int);
 */
 #define noteInt(variable)                             \
   do {                                                \
-    printf("(%s = %d)", #variable, (long)variable);   \
+    printf("(%s = %d)", #variable, variable);         \
     fflush(stdout);                                   \
   } while(0);
 
