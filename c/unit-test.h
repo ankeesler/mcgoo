@@ -76,7 +76,7 @@ void _expectString(const char *, const char *, int);
 */
 #define noteHex(variable)                             \
   do {                                                \
-    printf("(%s = 0x%X)", #variable, (long)variable); \
+    printf("(%s = 0x%X)", #variable, (int)variable);  \
     fflush(stdout);                                   \
   } while(0);
 
@@ -86,9 +86,18 @@ void _expectString(const char *, const char *, int);
 */
 #define noteFloat(variable)                           \
   do {                                                \
-    printf("(%s = %f)", #variable, (long)variable);   \
+    printf("(%s = %f)", #variable, (float)variable);  \
     fflush(stdout);                                   \
   } while(0);
+
+/** Set the failure handler. This function will be called
+    upon an expect() failure. Remember, this can be set to
+    NULL to have no failure handler called.
+
+    @param failureHandler The function to be called upon
+    failure.
+*/
+void setFailureHandler(void (*failureHandler)(void));
 
 #endif /* __BGE_MAP_TEST_H__ */
 

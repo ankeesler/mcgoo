@@ -14,6 +14,12 @@
 #include <sys/time.h>
 
 static int expectNum = 0;
+static void (*failureHandler)(void) = NULL;
+
+void setFailureHandler(void (*fh)(void))
+{
+  failureHandler = fh;
+}
 
 void runTest(int (*test)(void), const char *name)
 {
@@ -50,6 +56,7 @@ void _expect(int comparison, const char *comparisonString, int line)
 #ifndef UNIT_TEST_UNIT_TEST
     printf("\n\n");
     fflush(stdout);
+    if (failureHandler) failureHandler();
     exit(-1);
 #endif
   }

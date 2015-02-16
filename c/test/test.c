@@ -63,12 +63,23 @@ int noteTest(void)
   return 0;
 }
 
+static int handlerCalled = 0;
+static void failureHandler(void)
+{
+  handlerCalled = 1;
+}
+
 int failedTest(void)
 {
   int i;
   for (i = 1; i < 10; i ++)
     expect(i);
   expect(1 == 2);
+  expect(!handlerCalled);
+  setFailureHandler(failureHandler);
+  expect(1 == 2);
+  expect(handlerCalled);
+
   return 0;
 }
 
