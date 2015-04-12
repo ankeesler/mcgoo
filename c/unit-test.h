@@ -14,13 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/** mcgoo c test framework
-  
-    It is recommended only to make ::expect() calls in the process
-    from which the test was run. A failed expect in a child process
-    can lead to misleading failure printouts and twisted wait() calls
-    by the parent process.
-*/
+/** mcgoo c test framework */
 
 /** Run a test.
     @param test, The test to run
