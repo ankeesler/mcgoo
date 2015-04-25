@@ -16,6 +16,10 @@
 
 /** mcgoo c test framework */
 
+/** Set the framework to print verbose expect() calls. */
+#define setVerbose(enable) (mcgooVerbose = (enable))
+extern int mcgooVerbose;
+
 /** Run a test.
     @param test, The test to run
     @param name, The name of the test to run

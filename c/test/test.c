@@ -63,6 +63,25 @@ int noteTest(void)
   return 0;
 }
 
+int verboseTest(void)
+{
+  setVerbose(1);
+
+  expect(1); expect(1); expect(1);
+  expect(1); expect(1); expect(1);
+  expect(1); expect(1); expect(1);
+
+  usleep(123456);
+
+  expect(1 + 3);
+  expect(4 - 2 + 1 * 5);
+  expect(!( 3 - 3));
+
+  setVerbose(0);
+
+  return 0;
+}
+
 static int handlerCalled = 0;
 static void failureHandler(void)
 {
@@ -83,6 +102,21 @@ int failedTest(void)
   return 0;
 }
 
+int failedVerboseTest(void)
+{
+  setVerbose(1);
+
+  expect(1); expect(1); expect(1);
+  expect(1); expect(1); expect(1);
+  expect(1); expect(1); expect(1);
+
+  expect(1 + 3 - 2 - 2);
+
+  setVerbose(0);
+
+  return 0;
+}
+
 int main(void)
 {
   announce();
@@ -90,6 +124,8 @@ int main(void)
   run(stringsTest);
   run(longTest);
   run(noteTest);
+  run(verboseTest);
   run(failedTest);
+  run(failedVerboseTest);
   return 0;
 }

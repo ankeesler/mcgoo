@@ -13,8 +13,19 @@
 
 #include <sys/time.h>
 
+static struct timeval testStart, testEnd;
+
 static int expectNum = 0;
 static void (*failureHandler)(void) = NULL;
+
+int mcgooVerbose = 0;
+
+static long timeDiffUS(struct timeval *start, struct timeval *end)
+{
+  return (((end->tv_sec * 1000000) + end->tv_usec)
+          - ((start->tv_sec * 1000000) + start->tv_usec));
+}
+                       
 
 void setFailureHandler(void (*fh)(void))
 {
@@ -23,9 +34,8 @@ void setFailureHandler(void (*fh)(void))
 
 void runTest(int (*test)(void), const char *name)
 {
-  struct timeval testStart, testEnd;
+
   int returnVal;
-  long timeDiffUS;
 
   expectNum = 0;
   printf("(test = %s)", name);
@@ -35,12 +45,14 @@ void runTest(int (*test)(void), const char *name)
   gettimeofday(&testStart, NULL);
   returnVal = test();
   gettimeofday(&testEnd, NULL);
-  timeDiffUS = (((testEnd.tv_sec * 1000000) + testEnd.tv_usec)
-                - ((testStart.tv_sec * 1000000) + testStart.tv_usec));
 
-  printf(" ] ( %ld us ) %s\n",
-         timeDiffUS,
-         returnVal == 0 ? "PASS" : "FAIL");
+  printf(" ]");
+  if (mcgooVerbose) {
+    printf(" ( %ld us ) %s\n",
+           timeDiffUS(&testStart, &testEnd),
+           (returnVal == 0 ? "PASS" : "FAIL"));
+  }
+  printf("\n");
   fflush(stdout);
 }
 
@@ -48,11 +60,23 @@ void _expect(int comparison, const char *comparisonString, int line)
 {
   if (comparison) {
     expectNum ++;
-    printf(".");
+    if (mcgooVerbose) {
+      gettimeofday(&testEnd, NULL);
+      printf("\n  expect SUCCESS { %s } @ line %d ( %ld us )",
+             comparisonString, line, timeDiffUS(&testStart, &testEnd));
+    } else {
+      printf(".");
+    }
     fflush(stdout);
   } else {
-    printf("X <- %d ] FAIL { %s } @ line %d",
-           expectNum, comparisonString, line);
+    if (mcgooVerbose) {
+      printf("\n  ");
+    } else {
+      printf("X <- %d ] ",
+             expectNum);
+    }
+    printf("expect FAIL { %s } @ line %d",
+           comparisonString, line);
 #ifndef UNIT_TEST_UNIT_TEST
     printf("\n\n");
     fflush(stdout);
