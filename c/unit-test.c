@@ -133,6 +133,8 @@ void noteTime(void)
     spaces = end / 3;
     index = spaces + end;
   }
-  
-  printf("(time = %s)", buffer);
+
+  printf("%s(time = %s)",
+         (mcgooVerbose ? "\n  " : ""),
+         buffer);
 }
