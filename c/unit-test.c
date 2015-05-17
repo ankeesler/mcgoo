@@ -106,3 +106,33 @@ void _announce(const char *filename)
   printf("| *\n");
   fflush(stdout);
 }
+
+void noteTime(void)
+{
+  struct timeval currentTime;
+  char buffer[0xFF];
+  int end, spaces, index;
+ 
+  gettimeofday(&currentTime, NULL);
+
+  memset(buffer, 0, 0xFF);
+  sprintf(buffer,
+          "%ld",
+          ((currentTime.tv_sec * 1000000) + currentTime.tv_usec));
+
+  end = strlen(buffer) - 1;
+  spaces = end / 3;
+  index = spaces + end;
+  while (end >= 3) {
+    buffer[index - 0] = buffer[end - 0];
+    buffer[index - 1] = buffer[end - 1];
+    buffer[index - 2] = buffer[end - 2];
+    buffer[index - 3] = ' ';
+    
+    end -= 3;
+    spaces = end / 3;
+    index = spaces + end;
+  }
+  
+  printf("(time = %s)", buffer);
+}

@@ -9,7 +9,7 @@ all: global
 #######################################
 
 CC=gcc
-CFLAGS=-Wall -Werror -g
+CFLAGS=-Wall -Werror -g -O0
 
 BUILD_DIR=build
 BUILD_DIR_CREATED=$(BUILD_DIR)/created
@@ -24,9 +24,9 @@ clean:
 	$(RM) $(RM_STUFF)
 
 STAGE_DIR=stage
-	
+
 test-all: global run-java-test perl-test lib-test
-	
+
 #######################################
 # Global install stuff
 #######################################
@@ -48,7 +48,7 @@ $(BUILD_DIR)/%.o: c/test/%.c $(BUILD_DIR_CREATED)
 
 $(BUILD_DIR)/%.o: c/%.c c/%.h $(BUILD_DIR_CREATED)
 	$(CC) $(CFLAGS) -fpic -o $@ -c $<
-	
+
 $(BUILD_DIR)/unit-test-unit-test.o: c/unit-test.c $(UNIT_TEST_HEADER) $(BUILD_DIR_CREATED)
 	$(CC) $(CFLAGS) -fpic -DUNIT_TEST_UNIT_TEST -o $@ -c $<
 

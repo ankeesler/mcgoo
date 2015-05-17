@@ -36,6 +36,8 @@ int noteTest(void)
 {
   int hey;
 
+  noteTime();
+
   expect(1); expect(1); expect(1);
 
   hey = 5;
@@ -48,6 +50,8 @@ int noteTest(void)
 
   expect(1); expect(1); expect(1);
 
+  noteTime();
+
   hey = 129;
   noteHex(hey);
 
@@ -59,6 +63,8 @@ int noteTest(void)
   expect(1); expect(1); expect(1);
 
   note("andrew");
+
+  noteTime();
 
   return 0;
 }
@@ -120,6 +126,7 @@ int failedVerboseTest(void)
 int main(void)
 {
   announce();
+
   run(numbersTest);
   run(stringsTest);
   run(longTest);
@@ -127,5 +134,6 @@ int main(void)
   run(verboseTest);
   run(failedTest);
   run(failedVerboseTest);
+
   return 0;
 }

@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/time.h>
 
 /** mcgoo c test framework */
 
@@ -87,6 +88,9 @@ void _expectString(const char *, const char *, int);
     printf("(%s = %f)", #variable, (float)variable);  \
     fflush(stdout);                                   \
   } while(0);
+
+/** Note the time in a test in microseconds. */
+void noteTime(void);
 
 /** Set the failure handler. This function will be called
     upon an expect() failure. Remember, this can be set to
