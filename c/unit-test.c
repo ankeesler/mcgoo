@@ -34,7 +34,6 @@ void setFailureHandler(void (*fh)(void))
 
 void runTest(int (*test)(void), const char *name)
 {
-
   int returnVal;
 
   expectNum = 0;
@@ -48,7 +47,7 @@ void runTest(int (*test)(void), const char *name)
 
   printf(" ]");
   if (mcgooVerbose) {
-    printf(" ( %ld us ) %s\n",
+    printf(" ( %ld us )\n%s\n",
            timeDiffUS(&testStart, &testEnd),
            (returnVal == 0 ? "PASS" : "FAIL"));
   }
