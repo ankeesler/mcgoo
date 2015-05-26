@@ -48,6 +48,14 @@ void _expectString(const char *, const char *, int);
 */
 #define expectString(s1, s2) _expectString(s1, s2, __LINE__)
 
+void _expectEquals(int val1, int val2, int line);
+/** Standard expect of values.
+
+    @param val1, The first value.
+    @param val2, The second value.
+*/
+#define expectEquals(val1, val2) _expectEquals(val1, val2, __LINE__)
+
 /** Print out a string during a test.
 
     @param string The string to print out.

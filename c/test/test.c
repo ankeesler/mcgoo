@@ -88,6 +88,21 @@ int verboseTest(void)
   return 0;
 }
 
+int equalsTest(void)
+{
+  expect(1); expect(1); expect(1);
+  expect(1); expect(1); expect(1);
+  expect(1); expect(1); expect(1);
+  
+  expectEquals(1, 1);
+
+  expectEquals(getpid(), getpid());
+
+  expectEquals(1, 0);
+
+  return 0;
+}
+
 static int handlerCalled = 0;
 static void failureHandler(void)
 {
@@ -132,6 +147,8 @@ int main(void)
   run(longTest);
   run(noteTest);
   run(verboseTest);
+  run(equalsTest);
+  
   run(failedTest);
   run(failedVerboseTest);
 

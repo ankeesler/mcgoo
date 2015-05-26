@@ -99,6 +99,13 @@ void _expectString(const char *s1, const char *s2, int line)
   }
 }
 
+void _expectEquals(int val1, int val2, int line)
+{
+  char expectStringThing[256];
+  sprintf(expectStringThing, "%d == %d", val1, val2);
+  _expect(val1 == val2, expectStringThing, line);
+}
+
 void _announce(const char *filename)
 {
   printf("\n| *\n");

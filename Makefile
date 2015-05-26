@@ -65,8 +65,8 @@ dynamic: $(LIBRARY_FILE) include
 $(BUILD_DIR)/lib-test: $(BUILD_DIR)/unit-test-unit-test.o $(BUILD_DIR)/test.o
 	$(CC) $(CFLAGS) -o $@ $^
 
-lib-test: $(BUILD_DIR)/lib-test dynamic
-	$<
+lib-test: dynamic $(BUILD_DIR)/lib-test
+	$(BUILD_DIR)/lib-test
 
 #######################################
 # Mcgoo Perl Module thing
