@@ -99,10 +99,10 @@ void _expectString(const char *s1, const char *s2, int line)
   }
 }
 
-void _expectEquals(int val1, int val2, int line)
+void _expectEquals(long val1, long val2, int line)
 {
   char expectStringThing[256];
-  sprintf(expectStringThing, "0x%X == 0x%X", val1, val2);
+  sprintf(expectStringThing, "0x%lX == 0x%lX", val1, val2);
   _expect(val1 == val2, expectStringThing, line);
 }
 
