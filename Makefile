@@ -38,7 +38,7 @@ global: dynamic module java-lib
 #######################################
 
 LIBRARY_NAME=libmcgoo
-LIBRARY_LOCATION=/usr/lib
+LIBRARY_LOCATION=/usr/local/lib
 LIBRARY_FILE=$(LIBRARY_LOCATION)/$(LIBRARY_NAME).so
 
 UNIT_TEST_HEADER=c/unit-test.h
@@ -58,7 +58,7 @@ $(LIBRARY_FILE): $(BUILD_DIR)/unit-test.o | $(UNIT_TEST_HEADER)
 lib: $(LIBRARY_FILE)
 
 include: $(UNIT_TEST_HEADER)
-	sudo cp $^ /usr/include/
+	sudo cp $^ /usr/local/include/
 
 dynamic: $(LIBRARY_FILE) include
 
