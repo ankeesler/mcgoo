@@ -28,6 +28,11 @@ extern int mcgooVerbose;
 void runTest(int (*test)(void), const char *name);
 #define run(test) runTest(test, #test)
 
+/** Run a test.
+    @param test, The test to skip
+*/
+#define skip(test) (void)(test)
+
 /** Announce that a test from a file is running.
 */
 void _announce(const char *);
