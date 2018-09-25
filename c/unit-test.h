@@ -21,6 +21,13 @@
 #define setVerbose(enable) (mcgooVerbose = (enable))
 extern int mcgooVerbose;
 
+/** Set the framework progress string which is printed out upon
+    successful expect()'s.
+*/
+#define setProgressString(s) (mcgooProgress = (s))
+#define resetProgressString() (mcgooProgress = ".")
+extern const char *mcgooProgress;
+
 /** Run a test.
     @param test, The test to run
     @param name, The name of the test to run

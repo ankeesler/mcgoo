@@ -19,6 +19,7 @@ static int expectNum = 0;
 static void (*failureHandler)(void) = NULL;
 
 int mcgooVerbose = 0;
+const char *mcgooProgress = ".";
 
 static long timeDiffUS(struct timeval *start, struct timeval *end)
 {
@@ -64,7 +65,7 @@ void _expect(int comparison, const char *comparisonString, int line)
       printf("\n  expect SUCCESS { %s } @ line %d ( %ld us )",
              comparisonString, line, timeDiffUS(&testStart, &testEnd));
     } else {
-      printf(".");
+      printf("%s", mcgooProgress);
     }
     fflush(stdout);
   } else {

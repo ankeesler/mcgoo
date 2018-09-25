@@ -103,6 +103,17 @@ int equalsTest(void)
   return 0;
 }
 
+int progressTest(void)
+{
+  setProgressString("!");
+  expect(1); expect(1); expect(1);
+  setProgressString(":) ");
+  expect(1); expect(1); expect(1);
+  resetProgressString();
+  expect(1); expect(1); expect(1);
+  return 0;
+}
+
 static int handlerCalled = 0;
 static void failureHandler(void)
 {
@@ -148,6 +159,7 @@ int main(void)
   run(noteTest);
   run(verboseTest);
   run(equalsTest);
+  run(progressTest);
   
   run(failedTest);
   run(failedVerboseTest);
