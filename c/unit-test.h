@@ -72,7 +72,7 @@ void _expectEquals(long val1, long val2, int line);
 
     @param string The string to print out.
 */
-#define note(string)                                  \ 
+#define note(string)                                  \
   do {                                                \
     printf("(%s)", string);                           \
     fflush(stdout);                                   \
