@@ -7,7 +7,7 @@
 // Code for unit tests.
 //
 
-#ifndef __UNIT_TEST_H__ 
+#ifndef __UNIT_TEST_H__
 #define __UNIT_TEST_H__
 
 #include <stdio.h>
@@ -41,7 +41,7 @@ void runTest(int (*test)(void), const char *name);
 #define skip(test) (void)(test)
 
 /** Announce that a test from a file is running.
-*/
+ */
 void _announce(const char *);
 #define announce() _announce(__FILE__)
 
@@ -66,48 +66,47 @@ void _expectEquals(long val1, long val2, int line);
     @param val1, The first value.
     @param val2, The second value.
 */
-#define expectEquals(val1, val2) _expectEquals(val1, val2, __LINE__)
+#define expectEquals(val1, val2) _expectEquals((long)val1, (long)val2, __LINE__)
 
 /** Print out a string during a test.
 
     @param string The string to print out.
 */
-#define note(string)                                  \
-  do {                                                \
-    printf("(%s)", string);                           \
-    fflush(stdout);                                   \
-  } while(0);
+#define note(string)                                                           \
+  do {                                                                         \
+    printf("(%s)", string);                                                    \
+    fflush(stdout);                                                            \
+  } while (0);
 
 /** Print out an variable's int value during a test.
 
     @param variable The variable you want to pring out.
 */
-#define noteInt(variable)                             \
-  do {                                                \
-    printf("(%s = %d)", #variable, (int)variable);    \
-    fflush(stdout);                                   \
-  } while(0);
-
+#define noteInt(variable)                                                      \
+  do {                                                                         \
+    printf("(%s = %d)", #variable, (int)variable);                             \
+    fflush(stdout);                                                            \
+  } while (0);
 
 /** Print out a variable in hex value during a test.
 
     @param variable The variable you want to pring out.
 */
-#define noteHex(variable)                             \
-  do {                                                \
-    printf("(%s = 0x%X)", #variable, (int)variable);  \
-    fflush(stdout);                                   \
-  } while(0);
+#define noteHex(variable)                                                      \
+  do {                                                                         \
+    printf("(%s = 0x%X)", #variable, (int)variable);                           \
+    fflush(stdout);                                                            \
+  } while (0);
 
 /** Print out a variable as a float during a test.
 
     @param variable The variable you want to pring out.
 */
-#define noteFloat(variable)                           \
-  do {                                                \
-    printf("(%s = %f)", #variable, (float)variable);  \
-    fflush(stdout);                                   \
-  } while(0);
+#define noteFloat(variable)                                                    \
+  do {                                                                         \
+    printf("(%s = %f)", #variable, (float)variable);                           \
+    fflush(stdout);                                                            \
+  } while (0);
 
 /** Note the time in a test in microseconds. */
 void noteTime(void);
@@ -122,4 +121,3 @@ void noteTime(void);
 void setFailureHandler(void (*failureHandler)(void));
 
 #endif /* __BGE_MAP_TEST_H__ */
-
